@@ -1,0 +1,32 @@
+[
+  {
+    "Id": "ce3e8eba-83d7-4cb9-b927-a095f328111f",
+    "Name": "Action",
+    "Icon": "\uE7FC",
+    "GameCount": 0
+  },
+  {
+    "Id": "8ff9cc7f-a397-49db-ad04-adff84f4be86",
+    "Name": "Racing",
+    "Icon": "\uE804",
+    "GameCount": 0
+  },
+  {
+    "Id": "025ac30e-8c3c-479e-a8be-aa19a5987ed9",
+    "Name": "Sports",
+    "Icon": "\uE8D6",
+    "GameCount": 0
+  },
+  {
+    "Id": "cb19a0f5-9574-4dac-9f92-17eb437d41a3",
+    "Name": "Strategy",
+    "Icon": "\uE74C",
+    "GameCount": 0
+  },
+  {
+    "Id": "3a83af7b-f963-44fa-bc76-6a4111852cdb",
+    "Name": "Arcade",
+    "Icon": "\uE7FC",
+    "GameCount": 0
+  }
+]

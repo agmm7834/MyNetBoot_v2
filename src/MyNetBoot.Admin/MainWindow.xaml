@@ -1,0 +1,464 @@
+﻿<Window x:Class="MyNetBoot.Admin.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MyNetBoot.Admin"
+        xmlns:vm="clr-namespace:MyNetBoot.Admin.ViewModels"
+        Title="MyNetBoot Admin Panel" 
+        Height="800" Width="1400"
+        MinHeight="600" MinWidth="1000"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
+    
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Logo -->
+                <StackPanel Grid.Row="0" Margin="20,24,20,20">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="48" Height="48" CornerRadius="12" Background="{StaticResource PrimaryGradientBrush}">
+                            <TextBlock Text="&#xE7F4;" FontFamily="Segoe MDL2 Assets" FontSize="24" 
+                                       Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="MyNetBoot" FontSize="18" FontWeight="Bold" 
+                                       Foreground="{StaticResource TextPrimaryBrush}"/>
+                            <TextBlock Text="Admin Panel" FontSize="12" 
+                                       Foreground="{StaticResource TextMutedBrush}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Connection Status -->
+                <Border Grid.Row="1" Margin="16,0,16,16" Padding="12" CornerRadius="8"
+                        Background="{StaticResource CardBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+                            <Ellipse Width="10" Height="10" Margin="0,0,8,0">
+                                <Ellipse.Style>
+                                    <Style TargetType="Ellipse">
+                                        <Setter Property="Fill" Value="{StaticResource ErrorBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsConnected}" Value="True">
+                                                <Setter Property="Fill" Value="{StaticResource SuccessBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                            <TextBlock Text="{Binding ConnectionStatus}" FontSize="13"
+                                       Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Content="Ulash" 
+                                    Command="{Binding ConnectCommand}"
+                                    Visibility="{Binding IsNotConnected, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Style="{StaticResource PrimaryButtonStyle}" 
+                                    Padding="16,8" FontSize="12"/>
+                            <Button Content="Uzish" 
+                                    Command="{Binding DisconnectCommand}"
+                                    Visibility="{Binding IsConnected, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    Style="{StaticResource SecondaryButtonStyle}" 
+                                    Padding="16,8" FontSize="12"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Navigation -->
+                <StackPanel Grid.Row="2" Margin="12,0">
+                    <TextBlock Text="ASOSIY" FontSize="11" FontWeight="SemiBold" Margin="8,0,0,8"
+                               Foreground="{StaticResource TextMutedBrush}"/>
+                    
+                    <RadioButton Content="Dashboard" Tag="&#xE80F;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}" IsChecked="True"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Dashboard"/>
+                    
+                    <RadioButton Content="Clientlar" Tag="&#xE7F5;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Clients"/>
+                    
+                    <RadioButton Content="Foydalanuvchilar" Tag="&#xE77B;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Users"/>
+                    
+                    <RadioButton Content="O'yinlar" Tag="&#xE7FC;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Games"/>
+                    
+                    <TextBlock Text="TIZIM" FontSize="11" FontWeight="SemiBold" Margin="8,24,0,8"
+                               Foreground="{StaticResource TextMutedBrush}"/>
+                    
+                    <RadioButton Content="Disk Images" Tag="&#xE8B7;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Images"/>
+                    
+                    <RadioButton Content="Sozlamalar" Tag="&#xE713;" GroupName="Nav"
+                                 Style="{StaticResource NavButtonStyle}"
+                                 Command="{Binding NavigateCommand}" CommandParameter="Settings"/>
+                </StackPanel>
+                
+                <!-- Footer -->
+                <Border Grid.Row="3" Padding="16" BorderThickness="0,1,0,0" 
+                        BorderBrush="{StaticResource DividerBrush}">
+                    <TextBlock Text="v1.0.0 | MyNetBoot" FontSize="11"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Header -->
+            <Border Grid.Row="0" Padding="24,16" BorderThickness="0,0,0,1"
+                    BorderBrush="{StaticResource DividerBrush}">
+                <Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding CurrentView}" FontSize="24" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource IconButtonStyle}" 
+                                Command="{Binding RefreshCommand}" ToolTip="Yangilash">
+                            <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets" FontSize="16"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            
+            <!-- Content Area -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="24">
+                <Grid>
+                    <!-- Dashboard View -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Dashboard}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Stats Cards -->
+                        <UniformGrid Grid.Row="0" Columns="4" Margin="0,0,0,24">
+                            <!-- Online Clients -->
+                            <Border Style="{StaticResource CardStyle}" Margin="0,0,12,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <Border Width="40" Height="40" CornerRadius="10" 
+                                                Background="{StaticResource SuccessGradientBrush}">
+                                            <TextBlock Text="&#xE7F5;" FontFamily="Segoe MDL2 Assets" 
+                                                       FontSize="18" Foreground="White"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding OnlineClients}" FontSize="32" FontWeight="Bold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Online Clientlar" FontSize="13"
+                                               Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Playing -->
+                            <Border Style="{StaticResource CardStyle}" Margin="6,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <Border Width="40" Height="40" CornerRadius="10" 
+                                                Background="{StaticResource PrimaryGradientBrush}">
+                                            <TextBlock Text="&#xE7FC;" FontFamily="Segoe MDL2 Assets" 
+                                                       FontSize="18" Foreground="White"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding PlayingClients}" FontSize="32" FontWeight="Bold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="O'ynayotganlar" FontSize="13"
+                                               Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Total Games -->
+                            <Border Style="{StaticResource CardStyle}" Margin="6,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <Border Width="40" Height="40" CornerRadius="10" Background="#F59E0B">
+                                            <TextBlock Text="&#xE81E;" FontFamily="Segoe MDL2 Assets" 
+                                                       FontSize="18" Foreground="White"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding TotalGames}" FontSize="32" FontWeight="Bold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Jami O'yinlar" FontSize="13"
+                                               Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            
+                            <!-- Uptime -->
+                            <Border Style="{StaticResource CardStyle}" Margin="12,0,0,0">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                        <Border Width="40" Height="40" CornerRadius="10" Background="#EF4444">
+                                            <TextBlock Text="&#xE823;" FontFamily="Segoe MDL2 Assets" 
+                                                       FontSize="18" Foreground="White"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Uptime}" FontSize="32" FontWeight="Bold"
+                                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                                    <TextBlock Text="Server Uptime" FontSize="13"
+                                               Foreground="{StaticResource TextMutedBrush}"/>
+                                </StackPanel>
+                            </Border>
+                        </UniformGrid>
+                        
+                        <!-- Recent Clients -->
+                        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Grid.Row="0" Text="So'nggi Clientlar" FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,16"/>
+                                
+                                <DataGrid Grid.Row="1" ItemsSource="{Binding Clients}" AutoGenerateColumns="False"
+                                          IsReadOnly="True" SelectionMode="Single">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="NOMI" Binding="{Binding Name}" Width="*"/>
+                                        <DataGridTextColumn Header="IP MANZIL" Binding="{Binding IpAddress}" Width="120"/>
+                                        <DataGridTextColumn Header="STATUS" Binding="{Binding Status}" Width="100"/>
+                                        <DataGridTextColumn Header="O'YIN" Binding="{Binding CurrentGame}" Width="150"/>
+                                        <DataGridTextColumn Header="OXIRGI KO'RISH" Binding="{Binding LastSeen, StringFormat=HH:mm:ss}" Width="100"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Clients View -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Clients}">
+                        <Border Style="{StaticResource CardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                                    <TextBlock Text="Barcha Clientlar" FontSize="16" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalClients, StringFormat=' ({0} ta)'}" FontSize="14"
+                                               Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
+                                <DataGrid Grid.Row="1" ItemsSource="{Binding Clients}" AutoGenerateColumns="False"
+                                          IsReadOnly="True" SelectionMode="Single" x:Name="ClientsGrid">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="NOMI" Binding="{Binding Name}" Width="*"/>
+                                        <DataGridTextColumn Header="MAC MANZIL" Binding="{Binding MacAddress}" Width="150"/>
+                                        <DataGridTextColumn Header="IP MANZIL" Binding="{Binding IpAddress}" Width="120"/>
+                                        <DataGridTextColumn Header="STATUS" Binding="{Binding Status}" Width="100"/>
+                                        <DataGridTextColumn Header="O'YIN" Binding="{Binding CurrentGame}" Width="150"/>
+                                        <DataGridTemplateColumn Header="AMALLAR" Width="120">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Style="{StaticResource IconButtonStyle}" 
+                                                                Command="{Binding DataContext.KickClientCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding Id}" ToolTip="Chiqarish" Width="32" Height="32">
+                                                            <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                                                       Foreground="{StaticResource WarningBrush}"/>
+                                                        </Button>
+                                                        <Button Style="{StaticResource IconButtonStyle}"
+                                                                Command="{Binding DataContext.BlockClientCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding Id}" ToolTip="Bloklash" Width="32" Height="32">
+                                                            <TextBlock Text="&#xE8F8;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                                                       Foreground="{StaticResource ErrorBrush}"/>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Games View -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Games}">
+                        <Border Style="{StaticResource CardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Grid Grid.Row="0" Margin="0,0,0,16">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="O'yinlar Kutubxonasi" FontSize="16" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding TotalGames, StringFormat=' ({0} ta)'}" FontSize="14"
+                                                   Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <Button Content="+ O'yin Qo'shish" Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding AddGameCommand}" HorizontalAlignment="Right"
+                                            Padding="16,10" FontSize="13"/>
+                                </Grid>
+                                
+                                <DataGrid Grid.Row="1" ItemsSource="{Binding Games}" AutoGenerateColumns="False"
+                                          IsReadOnly="True" SelectionMode="Single">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="NOMI" Binding="{Binding Name}" Width="*"/>
+                                        <DataGridTextColumn Header="KATEGORIYA" Binding="{Binding Category}" Width="120"/>
+                                        <DataGridTextColumn Header="VERSIYA" Binding="{Binding Version}" Width="80"/>
+                                        <DataGridTextColumn Header="HAJMI" Binding="{Binding SizeBytes, StringFormat=N0}" Width="100"/>
+                                        <DataGridCheckBoxColumn Header="FAOL" Binding="{Binding IsEnabled}" Width="60"/>
+                                        <DataGridTemplateColumn Header="AMALLAR" Width="80">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Style="{StaticResource IconButtonStyle}"
+                                                            Command="{Binding DataContext.RemoveGameCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding Id}" ToolTip="O'chirish" Width="32" Height="32">
+                                                        <TextBlock Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                                                   Foreground="{StaticResource ErrorBrush}"/>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Users View -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Users}">
+                        <Border Style="{StaticResource CardStyle}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,16">
+                                    <TextBlock Text="Foydalanuvchilar" FontSize="16" FontWeight="SemiBold"
+                                               Foreground="{StaticResource TextPrimaryBrush}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Users.Count, StringFormat=' ({0} ta)'}" FontSize="14"
+                                               Foreground="{StaticResource TextMutedBrush}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                
+                                <DataGrid Grid.Row="1" ItemsSource="{Binding Users}" AutoGenerateColumns="False"
+                                          IsReadOnly="True" SelectionMode="Single">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                                        <DataGridTextColumn Header="FAMILYA" Binding="{Binding Familya}" Width="*"/>
+                                        <DataGridTextColumn Header="ISM" Binding="{Binding Ism}" Width="*"/>
+                                        <DataGridTextColumn Header="TELEFON" Binding="{Binding TelefonRaqam}" Width="120"/>
+                                        <DataGridTextColumn Header="BALANS" Binding="{Binding Balans, StringFormat='{}{0:N0} so\'m'}" Width="120"/>
+                                        <DataGridTemplateColumn Header="HOLAT" Width="100">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border CornerRadius="4" Padding="8,4">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="{StaticResource SuccessBrush}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Holat}" Value="Block">
+                                                                        <Setter Property="Background" Value="{StaticResource ErrorBrush}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="{Binding Holat}" FontSize="12" Foreground="White"
+                                                                   HorizontalAlignment="Center"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Settings View -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Settings}">
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Server Sozlamalari" FontSize="16" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,20"/>
+                                
+                                <Grid Margin="0,0,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Server manzili:" Foreground="{StaticResource TextSecondaryBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Text="{Binding ServerAddress}" 
+                                             Style="{StaticResource ModernTextBoxStyle}" MaxWidth="300" HorizontalAlignment="Left"/>
+                                </Grid>
+                                
+                                <Grid Margin="0,0,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Admin port:" Foreground="{StaticResource TextSecondaryBrush}"
+                                               VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Text="{Binding ServerPort}" 
+                                             Style="{StaticResource ModernTextBoxStyle}" MaxWidth="100" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                    
+                    <!-- Images View (Placeholder) -->
+                    <Grid Visibility="{Binding CurrentView, Converter={StaticResource ViewVisibilityConverter}, ConverterParameter=Images}">
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets" FontSize="64"
+                                           Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Disk Images" FontSize="20" FontWeight="SemiBold"
+                                           Foreground="{StaticResource TextPrimaryBrush}" Margin="0,16,0,8"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Bu bo'lim keyingi versiyada qo'shiladi" FontSize="14"
+                                           Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

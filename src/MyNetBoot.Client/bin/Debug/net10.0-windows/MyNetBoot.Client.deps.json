@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "MyNetBoot.Client/1.0.0": {
+        "dependencies": {
+          "MyNetBoot.Shared": "1.0.0"
+        },
+        "runtime": {
+          "MyNetBoot.Client.dll": {}
+        }
+      },
+      "MyNetBoot.Shared/1.0.0": {
+        "runtime": {
+          "MyNetBoot.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MyNetBoot.Client/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MyNetBoot.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

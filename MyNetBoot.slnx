@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MyNetBoot.Admin/MyNetBoot.Admin.csproj" />
+    <Project Path="src/MyNetBoot.Client/MyNetBoot.Client.csproj" />
+    <Project Path="src/MyNetBoot.Server/MyNetBoot.Server.csproj" />
+    <Project Path="src/MyNetBoot.Shared/MyNetBoot.Shared.csproj" />
+  </Folder>
+</Solution>

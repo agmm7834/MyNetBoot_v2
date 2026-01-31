@@ -1,0 +1,11 @@
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\bin\Debug\net8.0\MyNetBoot.Shared.deps.json
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\bin\Debug\net8.0\MyNetBoot.Shared.dll
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\bin\Debug\net8.0\MyNetBoot.Shared.pdb
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.AssemblyInfoInputs.cache
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.AssemblyInfo.cs
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.csproj.CoreCompileInputs.cache
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.dll
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\refint\MyNetBoot.Shared.dll
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\MyNetBoot.Shared.pdb
+C:\Users\RPG\Downloads\MyNetBootDesktop\MyNetBootDesktop\src\MyNetBoot.Shared\obj\Debug\net8.0\ref\MyNetBoot.Shared.dll
